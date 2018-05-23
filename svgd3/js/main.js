@@ -16,6 +16,10 @@ d3.json("data/buildings.json").then(function(data){
         d.height = +d.height;
     });
 
+    var y = d3.scaleLinear()
+        .domain([0, 828])
+        .range([0, 400]);
+
     var rects = svg.selectAll("rect")
             .data(data)
         .enter().append("rect")
@@ -25,7 +29,7 @@ d3.json("data/buildings.json").then(function(data){
             })
             .attr("width", 40)
             .attr("height", function(d){
-                return d.height;
+                return y(d.height);
             })
             .attr("fill", function(d) {
                 return "grey";
