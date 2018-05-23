@@ -4,36 +4,31 @@
 *    2.5 - Activity: Adding SVGs to the screen
 */
 
-d3.csv("data/ages.csv").then(function(data){
-  data.forEach(function(d){
-    d.age = +d.age;
-  });
+var svg = d3.select("#chart-area")
+    .append("svg")
+    .attr("width", "400")
+    .attr("height", "400");
 
-var svg= d3.select("#chart-area").append("svg")
-  .attr("width", 400)
-  .attr("height", 400);
+d3.json("data/buildings.json").then(function(data){
+    console.log(data);
 
-var circles = svg.selectAll("circle")
-    .data(data);
+    data.forEach(function(d) {
+        d.height = +d.height;
+    });
 
-circles.enter()
-      .append("circle")
-        .attr("cx", (d, i) =>{
-            console.log(d);
-            return (i * 50) + 25;
-        })
-        .attr("cy", 200)
-        .attr("r", d =>{
-          return d.age * 2;
-        })
-        .attr("fill", function(d){
-          if (d.name == "Emily") {
-            return "blue";
-          }
-          else {
-            return "red";
-          }
-      });
-  }).catch(function(error){
-    console.log(error);
-  })
+    var rects = svg.selectAll("rect")
+            .data(data)
+        .enter().append("rect")
+            .attr("y", 0)
+            .attr("x", function(d, i){
+                return (i * 60);
+            })
+            .attr("width", 40)
+            .attr("height", function(d){
+                return d.height;
+            })
+            .attr("fill", function(d) {
+                return "grey";
+            });
+
+})
