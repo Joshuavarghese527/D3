@@ -4,10 +4,13 @@
 *    2.5 - Activity: Adding SVGs to the screen
 */
 
-var data = [25, 20, 10, 12, 15];
+d3.csv("data/ages.csv").then(function(data){
+  data.forEach(function(d){
+    d.age = +d.age;
+  });
 
 var svg= d3.select("#chart-area").append("svg")
-  .attr("width", 500)
+  .attr("width", 400)
   .attr("height", 400);
 
 var circles = svg.selectAll("circle")
@@ -16,11 +19,21 @@ var circles = svg.selectAll("circle")
 circles.enter()
       .append("circle")
         .attr("cx", (d, i) =>{
-            console.log("Item: " + d, "Item: " + i);
+            console.log(d);
             return (i * 50) + 25;
         })
         .attr("cy", 200)
         .attr("r", d =>{
-          return d;
+          return d.age * 2;
         })
-        .attr("fill", "grey");
+        .attr("fill", function(d){
+          if (d.name == "Emily") {
+            return "blue";
+          }
+          else {
+            return "red";
+          }
+      });
+  }).catch(function(error){
+    console.log(error);
+  })
