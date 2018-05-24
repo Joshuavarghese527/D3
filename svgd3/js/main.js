@@ -1,13 +1,15 @@
-/*
-*    main.js
-*    Mastering Data Visualization with D3.js
-*    2.5 - Activity: Adding SVGs to the screen
-*/
+var margin = { left:100, right:10, top:10, bottom:100};
+
+var width = 600 - margin.left - margin.right;
+var height = 400 - margin.top - margin.bottom;
 
 var svg = d3.select("#chart-area")
     .append("svg")
-    .attr("width", "400")
-    .attr("height", "400");
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+    var g = svg.append("g")
+      .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
 
 d3.json("data/buildings.json").then(function(data){
     console.log(data);
