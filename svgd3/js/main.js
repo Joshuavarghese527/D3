@@ -17,17 +17,17 @@ d3.json("data/buildings.json").then(function(data){
     });
 
     var x = d3.scaleBand()
-        .domain(["Burj Khalifa", "Shanghai Tower",
-                 "Abraj Al-Bait Clock Tower", "Ping An Finance Centre",
-                 "Lotte World Tower"])
+        .domain(data.map(function(d){
+          return d.name;
+        }))
         .range([0, 400])
         .paddingInner(0.3)
         .paddingOuter(0.3);
 
-        console.log(x("Burj Khalifa"));
-
     var y = d3.scaleLinear()
-        .domain([0, 828])
+        .domain([0, d3.max(data, function(d){
+            return d.height;
+        })])
         .range([0, 400]);
 
     var rects = svg.selectAll("rect")
